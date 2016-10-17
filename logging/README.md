@@ -17,7 +17,7 @@ ex.
 def log(data, header='', logfile='default.log'): None
 ```
 
-```
+```python
 """
 Clears the specified log file.
 Returns False on error (file does not exist, permissions, etc.)

@@ -26,15 +26,21 @@ def check_for_data(host, port):
         log('readuntil failed')
         return
 
+    result = 'No result'
     try:
         if msg['op'] == 'runscript':
-            success, result = runscript(msg['data'])
-            if not success:
-                log('runscript err:\n%s' % (result,))
+            (g_vars, l_vars), error = runscript(msg['data'])
+            if error:
+                log('runscript err:\n%s' % (error,))
+                result = error
+            elif 'PYDBG' in g_vars:
+                result = g_vars['PYDBG']
+            elif 'PYDBG' in l_vars:
+                result = l_vars['PYDBG']
         else:
             result = 'Unsupported operation'
 
-        c.write({'result': result})
+        c.write(result)
         c.close()
     except:
         log('check err:\n%s' % (traceback(),))

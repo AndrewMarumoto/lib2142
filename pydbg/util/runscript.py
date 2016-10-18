@@ -50,7 +50,13 @@ def main(argc, argv):
             except:
                 return
 
-        pprint.pprint(json.loads(buf.split('\n', 1)[0]))
+        res = buf.split('\n', 1)[0]
+        try:
+            res = json.loads(res)
+        except:
+            print repr(res)
+        else:
+            pprint.pprint(res)
 
     except:
         traceback.print_exc()

@@ -30,18 +30,11 @@ from lib2142.pydbg import runscript
 
 def init():
   testfile = open('test_file.py', 'r').read()
-  success, output = runscript(testfile)
-  if success:
-    logging.log('testfile success:\n%s' % str(output))
-  else:
-    logging.log('testfile failed:\n%s' % str(output))
-```
-
-To send data to `output` from within your script, add an entry to the global `PYDBG` dictionary.
-```python
-def do_stuff():
-  my_data = ...
-  PYDBG['do_stuff result'] = my_data
+  (g_vars, l_vars), error = runscript(testfile)
+  if error:
+    logging.log('testfile failed:\n%s' % str(error))
+  else if 'PYDBG' in l_vars:
+    logging.log('testfile success:\n%s' % str(l_vars['PYDBG']))
 ```
 
 # Remote
@@ -58,7 +51,7 @@ To run a python file using this method, `util/runscript.py` is provided.  The HO
 python util/runscript.py [filename]
 ```
 
-When the script exits, either the contents of the PYDBG global or an exception trace will be printed.
+When the script exits, either the contents of the PYDBG variable or an exception trace will be printed.
 
 # Ingame
 Note: this is currently set up for debugging purposes only.  Anyone on the server can execute commands.  Do not run this on a live server.
@@ -66,14 +59,15 @@ Note: this is currently set up for debugging purposes only.  Anyone on the serve
 The ingame console can be loaded by running its `init` function.
 ```python
 from lib2142.pydbg import ingame
-ingame.init()
+ingame.init(log_cmds=False)
 ```
 
 When ingame, players can run python code by sending `!py [command]` to chat.
 
 A function is provided for sending messages to server chat.  Players can send `!py say('<message>')` to print data to server chat.
 
-If the PYDBG global is modified or an exception is raised, its contents will be printed to the console of the player as well as to the server chat.  
+If an exception is raised, its contents will be printed to the console of the player as well as to the server chat.  
 
+if `log_cmds` is `True`, the PYDBG variable (if it exists) will be logged and printed to the server chat.
 
 

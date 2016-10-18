@@ -19,6 +19,7 @@ def runscript(script_data, g_vars=None, l_vars=None):
 
 def traceback():
     etype, evalue, etb = sys.exc_info()
+    if not etb: return 'None'
 
     tmp = etb.tb_next
     while tmp is not None:

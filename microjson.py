@@ -1,6 +1,3 @@
-"""
-Ported to 2142's python 2.3.4 by idodgebull3ts
-"""
 
 # microjson - Minimal JSON parser/emitter for use in standalone scripts.
 # No warranty. Free to use/modify as you see fit. Trades speed for compactness.
@@ -9,10 +6,11 @@ Ported to 2142's python 2.3.4 by idodgebull3ts
 
 # std
 import math
-import types
-import sys
 
+# import StringIO
 from lib2142 import StringIO
+
+import types
 
 
 # the '_from_json_number' function returns either float or long.
@@ -40,8 +38,13 @@ E_BADESC = 'bad escape character found'
 E_UNSUPP = 'unsupported type "%s" cannot be JSON-encoded'
 E_BADFLOAT = 'cannot emit floating point value "%s"'
 
-NEG_INF = float(-sys.maxint) #float('-inf')
-POS_INF = float(sys.maxint) #float('inf')
+if 0:
+    NEG_INF = float('-inf')
+    POS_INF = float('inf')
+
+import sys
+NEG_INF = float(-sys.maxint)
+POS_INF = float(sys.maxint)
 
 
 class JSONError(Exception):
@@ -60,11 +63,15 @@ class JSONStream(object):
     def __init__(self, data):
         self._stm = StringIO.StringIO(data)
 
+    #@property
     def pos(self):
         return self._stm.pos
+    pos = property(pos)
 
+    #@property
     def len(self):
         return self._stm.len
+    len = property(len)
 
     def getvalue(self):
         return self._stm.getvalue()
@@ -87,9 +94,9 @@ class JSONStream(object):
         return ord(self.next())
 
     def peek(self):
-        if self.pos() == self.len():
+        if self.pos == self.len:
             return ''
-        return self.getvalue()[self.pos()]
+        return self.getvalue()[self.pos]
 
     def substr(self, pos, length):
         return self.getvalue()[pos:pos+length]

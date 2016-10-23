@@ -53,3 +53,7 @@ def decode(data):
         return res
 
 
+
+# aliases
+encodestring = encode
+

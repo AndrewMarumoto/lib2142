@@ -25,4 +25,6 @@ Usage information for specific modules can be found in their respective folders.
 * StringIO (no modifications) - https://github.com/python-git/python/blob/master/Lib/StringIO.py
 
 # Modified modules
-* [web](./web)
+* [urllib](./web/urllib.py)
+* [httplib](./web/httplib.py)
+* [mimetools](./web/mimetools.py)

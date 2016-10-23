@@ -228,15 +228,22 @@ class URLopener:
         if filename:
             tfp = open(filename, 'wb')
         else:
-            import tempfile
+            #import tempfile
+
             garbage, path = splittype(url)
             garbage, path = splithost(path or "")
             path, garbage = splitquery(path or "")
             path, garbage = splitattr(path or "")
-            suffix = os.path.splitext(path)[1]
-            (fd, filename) = tempfile.mkstemp(suffix)
-            self.__tempfiles.append(filename)
-            tfp = os.fdopen(fd, 'wb')
+
+            if 0:
+                suffix = os.path.splitext(path)[1]
+                (fd, filename) = tempfile.mkstemp(suffix)
+                self.__tempfiles.append(filename)
+                tfp = os.fdopen(fd, 'wb')
+            else:
+                rname = ''.join(['%02x' % c for c in open('/dev/urandom', 'rb').read(32)])
+                tfp = open('/tmp/%s' % rname, 'wb')
+
         result = filename, headers
         if self.tempcache is not None:
             self.tempcache[url] = result
@@ -266,7 +273,10 @@ class URLopener:
 
     def open_http(self, url, data=None):
         """Use HTTP protocol."""
-        import httplib
+
+        #import httplib
+        from lib2142.web import httplib
+
         user_passwd = None
         if isinstance(url, str):
             host, selector = splithost(url)

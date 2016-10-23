@@ -3,7 +3,8 @@
 
 import os
 import rfc822
-import tempfile
+
+#import tempfile
 
 __all__ = ["Message","choose_boundary","encode","decode","copyliteral",
            "copybinary"]
@@ -217,7 +218,7 @@ def pipeto(input, command):
     pipe.close()
 
 def pipethrough(input, command, output):
-    (fd, tempname) = tempfile.mkstemp()
+    #(fd, tempname) = tempfile.mkstemp()
     temp = os.fdopen(fd, 'w')
     copyliteral(input, temp)
     temp.close()

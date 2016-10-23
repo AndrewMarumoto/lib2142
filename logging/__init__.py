@@ -3,6 +3,8 @@ Simple logging implementation
 - idodgebull3ts
 """
 
+import datetime
+
 REMOTE_ADDR = ''
 REMOTE_PORT = 0
 LOG_REMOTE = False
@@ -24,11 +26,11 @@ def log(data, header='', logfile='default.log'):
         # kinda screwed here
         return False
 
-    # TODO: add timestamps  ...if only datetime was a thing in 2142
+    timestamp = str(datetime.datetime.now())
     if header:
-        f.write('%s\n%s\n' % (header, indent(data)))
+        f.write('[%s] %s\n%s\n' % (timestamp, header, indent(data)))
     else:
-        f.write('%s\n' % (data,))
+        f.write('[%s] %s\n' % (timestamp, data))
 
     f.close()
 

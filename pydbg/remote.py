@@ -10,7 +10,7 @@ from lib2142 import microjson
 from lib2142.pydbg import traceback, runscript
 
 
-def log(data): logging.log(data, logfile='remote.log')
+def log(data): logging.log(data, header='[pydbg:remote]')
 
 def init(host, port, interval=1):
     t = bf2.Timer(lambda _: check_for_data(host, port), interval, 1)

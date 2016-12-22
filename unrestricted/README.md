@@ -4,5 +4,6 @@ It is possible to load an unrestricted python interpreter into 2142.  The instru
 # Guides
 * [Loading an unrestricted python interpreter](./guides/unrestricted_python.md)
 * [Hooking game engine events with python (proof of concept)](./guides/game_engine_hooks/)
+* [Simple patching: changing the server fps](./guides/server_fps.md)
 
 
